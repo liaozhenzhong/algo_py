@@ -34,7 +34,7 @@ def merge_sort(X):
     new_X = []
     p_left, p_right = 0, 0
     for i in range(len(X)):
-        if left[p_left].key < right[p_right].key:
+        if left[p_left].key <= right[p_right].key:
             new_X.append(left[p_left])
             p_left += 1
         else:
