@@ -7,6 +7,8 @@ def union(node1, node2):
         root2.parent = root1
     else:
         root1.parent = root2
+        if root1.rank == root2.rank:
+            root2.rank += 1
 
 def find_set(node):
     if node.parent is node:
