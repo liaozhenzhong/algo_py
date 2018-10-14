@@ -1,16 +1,18 @@
 from heap import *
+from common import *
 
 def dijkstra(E, V, root):
-    Q = [node for node in V.values()]
-    h = Heap(Q, 'min')
+    h = Heap(list(V.values()), 'min')
     root.key = 0
     h.build_heap()
     while not h.empty():
         node = h.extract()
         for nbr_value, weight in E[node.value].items():
+            if V[nbr_value].color is Color.BLACK:
+                continue
             new_key = node.key + weight
-            if V[nbr_value].key > new_key:
-                nbr_index = h.indexof(V[nbr_value])
-                h.update_key(nbr_index, new_key)
+            if new_key < V[nbr_value].key:
+                h.update_key(V[nbr_value].pos, new_key)
                 V[nbr_value].prev = node
+            V[node.value].color = Color.BLACK
 
