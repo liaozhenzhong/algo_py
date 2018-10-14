@@ -1,23 +1,26 @@
 import math
+from common import *
 from heap import *
 
 def prim(E, V):
     for node in V.values():
         node.prev = None
         node.key = math.inf
+        node.color = Color.WHITE
 
-    Q = [node for node in V.values()]
-    Q[0].key = 0
-    h = Heap(Q, 'min')
+    random_key = list(V.keys())[0]
+    V[random_key].key = 0
+    V[random_key].color = Color.BLACK
+    h = Heap(list(V.values()), 'min')
     while not h.empty():
         node = h.extract()
         for nbr_value, weight in E[node.value].items():
+            if V[nbr_value].color is Color.BLACK:
+                continue
             if V[nbr_value].key > weight:
-                nbr_index = h.indexof(V[nbr_value])
-                if nbr_index is None:
-                    continue
-                h.update_key(nbr_index, weight)
+                h.update_key(V[nbr_value].pos, weight)
                 V[nbr_value].prev = node
+            node.color = Color.BLACK
 
     overall_weight = 0
     minimum_edges = []

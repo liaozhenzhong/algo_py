@@ -19,3 +19,4 @@ class Node(object):
         self.start_time = 0
         self.end_time = 0
         self.rank = 0
+        self.pos = 0

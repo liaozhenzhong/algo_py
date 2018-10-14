@@ -1,7 +1,9 @@
 class Heap(object):
     def __init__(self, X, heap_type):
-        self.X = X
         self.compare = self._lesser if heap_type == 'min' else self._greater_equal
+        self.X = X
+        for i in range(len(self.X)):
+            self.X[i].pos = i
 
     def _greater_equal(self, a, b):
         return a >= b
@@ -28,6 +30,7 @@ class Heap(object):
             most_what = right
         if i != most_what:
             self.X[most_what], self.X[i] = self.X[i], self.X[most_what]
+            self.X[most_what].pos, self.X[i].pos = self.X[i].pos, self.X[most_what].pos
             self.heapify(most_what)
 
     def build_heap(self):
@@ -38,6 +41,7 @@ class Heap(object):
         if self.empty():
             return None
         self.X[0], self.X[-1] = self.X[-1], self.X[0]
+        self.X[0].pos, self.X[-1].pos = self.X[-1].pos, self.X[0].pos
         node = self.X.pop()
         if not self.empty():
             self.heapify(0)
@@ -68,6 +72,7 @@ class Heap(object):
                 return
             if self.compare(self.X[i].key, self.X[p].key):
                 self.X[p], self.X[i] = self.X[i], self.X[p]
+                self.X[p].pos, self.X[i].pos = self.X[i].pos, self.X[p].pos
                 _update(p)
         _update(i)
 
