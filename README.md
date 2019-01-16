@@ -1,1 +1,1 @@
-algorithm demo in python
+algorithms demo in python
